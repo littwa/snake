@@ -1,25 +1,28 @@
 import Phaser from "phaser";
 import axios from "axios";
 
+const URL = "http://localhost:3004";
+
 let best = [
   { id: 12121, name: "Bob", level: 2 },
   { id: 13345, name: "Pit", level: 3 },
 ];
 
-let game;
+// let game;
 let scores = best;
 export default class OverScene extends Phaser.Scene {
   constructor() {
     super("OverScene");
     this.scores = [];
   }
+
   preload() {
     this.load.bitmapFont("arcade", "assets/arcade.png", "assets/arcade.xml");
   }
   create() {
     /////////////////////////////////////////////////////////////////
     axios
-      .get("http://localhost:3004/get-users", {})
+      .get(URL + "/get-users", {})
       .then(resp => {
         console.log(resp.data);
         scores = resp.data;
@@ -45,24 +48,6 @@ export default class OverScene extends Phaser.Scene {
         console.log(err.message);
         this.add.bitmapText(50, 50, "arcade", "sever no connected ").setTint(0xffffff);
       });
-
-    /////////////////////////////////////////////////////////////////
-
-    // this.add.bitmapText(50, 50, "arcade", "RANK SCORE NAME").setTint(0xffffff);
-    // for (let i = 1; i < 6; i++) {
-    //   if (scores[i - 1]) {
-    //     this.add
-    //       .bitmapText(
-    //         50,
-    //         100 + 50 * i,
-    //         "arcade",
-    //         ` ${i}    ${scores[i - 1].level}    ${scores[i - 1].name}`,
-    //       )
-    //       .setTint(0xffffff);
-    //   } else {
-    //     this.add.bitmapText(50, 100 + 50 * i, "arcade", ` ${i}    0    ---`).setTint(0xffffff);
-    //   }
-    // }
 
     const startButton = this.add
       .bitmapText(280, 450, "arcade", "start again", 20)
@@ -92,12 +77,3 @@ export default class OverScene extends Phaser.Scene {
       });
   }
 }
-
-// let config = {
-//   type: Phaser.AUTO,
-//   parent: "phaser-example",
-//   width: 800,
-//   height: 600,
-//   pixelArt: true,
-//   scene: [Highscore],
-// };

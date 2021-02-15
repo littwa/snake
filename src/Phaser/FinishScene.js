@@ -1,5 +1,6 @@
 import Phaser from "phaser";
 import axios from "axios";
+const URL = "http://localhost:3004";
 
 export default class FinishScene extends Phaser.Scene {
   constructor() {
@@ -16,6 +17,7 @@ export default class FinishScene extends Phaser.Scene {
   }
 
   create() {
+    console.log(this.snake, this.food);
     let result = this.snake.alive && this.food.total > 0 ? "Well Done" : "Game Over";
     this.add.bitmapText(160, 50, "arcade", result).setTint(0xffffff);
 
@@ -42,7 +44,7 @@ export default class FinishScene extends Phaser.Scene {
         delete current.id;
 
         axios
-          .post("http://localhost:3004/add-users", current)
+          .post(URL + "/add-users", current)
           .then(resp => {
             this.scene.manager.stop("FinishScene");
             this.scene.manager.start("OverScene");
@@ -77,26 +79,5 @@ export default class FinishScene extends Phaser.Scene {
         this.scene.manager.stop("FinishScene");
         this.scene.manager.start("OverScene");
       });
-
-    // $.ajax({
-    //   type: "GET",
-    //   url: "/scores",
-    //   success: function (data) {
-    //     game = new Phaser.Game(config);
-    //     scores = data;
-    //   },
-    //   error: function (xhr) {
-    //     console.log(xhr);
-    //   },
-    // });
-
-    // this.add.tween({
-    //   targets: [startButton],
-    //   ease: k => (k < 0.5 ? 0 : 1),
-    //   duration: 550,
-    //   yoyo: true,
-    //   repeat: -1,
-    //   alpha: 0,
-    // });
   }
 }

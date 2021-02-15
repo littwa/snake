@@ -13,6 +13,7 @@ export default class GameScene extends Phaser.Scene {
   constructor() {
     super("Game");
   }
+  ////////////////////////////////////////////////////////////////////
 
   gameOver() {
     this.scene.manager.stop("Game");
@@ -22,13 +23,16 @@ export default class GameScene extends Phaser.Scene {
   preload() {
     this.load.image("food", "assets/coin.png");
     this.load.image("body", "assets/player.png");
+    this.load.bitmapFont("arcade", "assets/arcade.png", "assets/arcade.xml");
 
     setTimeout(() => this.gameOver(), 60000);
   }
 
   create() {
-    let scoreText;
-    scoreText = this.add.text(6, 6, "0", { fontSize: "24px", fill: "#000" });
+    let scoreBitmapText;
+    scoreBitmapText = this.add.bitmapText(6, 6, "arcade", "0", 20).setTint(0xffffff);
+    // let scoreText;
+    // scoreText = this.add.text(6, 6, "0", { fontSize: "24px", fill: "#000" });
 
     let Food = new Phaser.Class({
       Extends: Phaser.GameObjects.Image,
@@ -37,7 +41,7 @@ export default class GameScene extends Phaser.Scene {
         Phaser.GameObjects.Image.call(this, scene);
 
         this.setTexture("food");
-        this.setPosition(x * 16, y * 16);
+        this.setPosition(x * 16, y * 16).setOrigin(0, 0);
 
         this.total = 0;
 
@@ -46,8 +50,12 @@ export default class GameScene extends Phaser.Scene {
 
       eat: function () {
         this.total++;
+        scoreBitmapText.setText(this.total);
 
-        scoreText.setText(this.total);
+        if (this.total > 3) {
+          let sceneBind = this;
+          return setTimeout(() => sceneBind.scene.gameOver(), 0);
+        }
       },
     });
 
@@ -188,9 +196,8 @@ export default class GameScene extends Phaser.Scene {
       },
     });
 
-    food = new Food(this, 4, 4);
-
     snake = new Snake(this, 8, 8);
+    food = new Food(this, 10, 4);
 
     cursors = this.input.keyboard.createCursorKeys();
   }
@@ -198,7 +205,7 @@ export default class GameScene extends Phaser.Scene {
   update(time, delta) {
     if (!snake.alive) {
       this.scene.manager.stop("Game");
-      this.scene.manager.start("FinishScene");
+      this.scene.manager.start("FinishScene", { snake, food });
       return;
     }
 

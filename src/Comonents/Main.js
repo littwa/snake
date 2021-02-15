@@ -11,7 +11,7 @@ class Test extends React.Component {
       type: Phaser.WEBGL,
       width: 640,
       height: 480,
-      backgroundColor: "#bfcc88",
+      backgroundColor: "#000",
       dom: {
         createContainer: true,
       },
