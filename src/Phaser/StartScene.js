@@ -16,7 +16,7 @@ export default class StartScene extends Phaser.Scene {
     // this.add.bitmapText(10, 50, "arcade", "RANK  SCORE   NAME").setTint(0xffffff);
     let text = this.add.text(150, 40, "", {
       color: "white",
-      fontSize: "50px ",
+      fontSize: "20px ",
     });
 
     let current = JSON.parse(localStorage.getItem("snake"));

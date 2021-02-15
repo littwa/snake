@@ -41,7 +41,10 @@ export default class OverScene extends Phaser.Scene {
         // this.scene.manager.stop("FinishScene");
         // this.scene.manager.start("OverScene");
       })
-      .catch(err => console.log(err.message));
+      .catch(err => {
+        console.log(err.message);
+        this.add.bitmapText(50, 50, "arcade", "sever no connected ").setTint(0xffffff);
+      });
 
     /////////////////////////////////////////////////////////////////
 
