@@ -1,19 +1,30 @@
 import Phaser from "phaser";
-
+// import arcadePng from "../assets/arcade.png";
+// import arcadeXml from "../assets/arcade.xml";
+// console.log(11111, arcadePng, arcadeXml);
 export default class StartScene extends Phaser.Scene {
   constructor() {
     super("Start");
   }
 
   preload() {
-    // this.load.bitmapFont("arcade", "assets/arcade.png", "assets/arcade.xml");
-    this.load.html("nameform", "assets/nameform.html");
+    ///===============================================================================
+
+    // this.load.bitmapFont("arcade", arcadePng, arcadeXml);
+    // this.load.bitmapFont("arcade", "snake/assets/arcade.png", "snake/assets/arcade.xml");
+    // this.load.image("arcade", "assets/arcade.png");
 
     // let current = JSON.parse(localStorage.getItem("snake"));
+    ///===============================================================================
+    this.load.html("nameform", "assets/nameform.html"); //snake
   }
 
   create() {
+    ///===============================================================================
+    // console.log(this.cache);
     // this.add.bitmapText(10, 50, "arcade", "RANK  SCORE   NAME").setTint(0xffffff);
+    ///===============================================================================
+
     let text = this.add.text(130, 40, "", {
       color: "white",
       fontSize: "30px ",
