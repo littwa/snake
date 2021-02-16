@@ -1,7 +1,8 @@
 import Phaser from "phaser";
 import axios from "axios";
 
-const URL = "http://localhost:3004";
+// const URL = "http://localhost:3004";
+const URL = "https://young-lake-73539.herokuapp.com";
 
 let best = [
   { id: 12121, name: "Bob", level: 2 },
